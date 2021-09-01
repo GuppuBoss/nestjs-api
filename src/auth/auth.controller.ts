@@ -4,13 +4,13 @@ import { JwtAuthGuard } from './jwt.auth.guard';
 import { LocalAuthGuard } from './local-auth.guard';
 import { FacebookAuthGuard } from './facebook.auth.guard';
 
-@Controller()
+@Controller('login')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
 
   @UseGuards(LocalAuthGuard)
-  @Post('login')
+  @Post()
   login(@Request() req): any {
     return this.authService.login(req.user);
   }
@@ -21,12 +21,12 @@ export class AuthController {
   }
   
   @UseGuards(FacebookAuthGuard)
-  @Get('login/facebook')
+  @Get('facebook')
   async facebookLogin(): Promise<any> {
     return HttpStatus.OK;
   }
 
-  @Get("login/facebook/redirect")
+  @Get("facebook/redirect")
   @UseGuards(FacebookAuthGuard)
   async facebookLoginRedirect(@Request() req): Promise<any> {
     return {
