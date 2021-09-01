@@ -21,7 +21,6 @@ export class FacebookStrategy extends PassportStrategy(Strategy, "facebook") {
     profile: Profile,
     done: (err: any, user: any, info?: any) => void
   ): Promise<any> {
-    const { name, emails, id } = profile;
     const user = await this.usersService.findOrCreateFbUser(profile);
     const payload = {
       user,
