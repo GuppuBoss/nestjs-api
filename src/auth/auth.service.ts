@@ -26,4 +26,22 @@ export class AuthService {
         }
 
     }
+    googleLogin(req) {
+        if (!req.user) {
+          return 'No user from google'
+        }
+        return {
+          message: 'User Info from Google',
+          user: req.user
+        }
+      }
+    facebookLogin(req) {
+        if (!req.user) {
+        return 'No user from facebook'
+        }
+        return {
+        message: 'User Info from facebook',
+        user: req.user
+        }
+    }
 }
