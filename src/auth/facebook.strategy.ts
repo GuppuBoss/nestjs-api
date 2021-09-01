@@ -7,9 +7,9 @@ import { UsersService } from "src/users/users.service";
 export class FacebookStrategy extends PassportStrategy(Strategy, "facebook") {
   constructor(private usersService: UsersService) {
     super({
-      clientID: `"${process.env.FACEBOOK_APP_ID}"`,
-      clientSecret: `"${process.env.FCAEBOOK_APP_SECRET}"`,
-      callbackURL: "http://localhost:3000/facebook/redirect",
+      clientID: process.env.FACEBOOK_APP_ID,
+      clientSecret: process.env.FACEBOOK_APP_SECRET,
+      callbackURL: "http://localhost:3000/login/facebook/redirect",
       scope: "email",
       profileFields: ["id", "emails", "name"],
     });
