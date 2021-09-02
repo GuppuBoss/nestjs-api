@@ -1,11 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { userInterface } from 'src/schemas/user.interface';
 import { Model } from 'mongoose';
+import config from '../config';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @Inject(`USER_MODEL`)
+    @Inject(config.USER_MODEL)
     private userModel: Model<userInterface>,
   ) { }
   // private readonly Users: User[] = [

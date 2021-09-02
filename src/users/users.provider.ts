@@ -1,8 +1,9 @@
 import { Connection } from "mongoose";
 import { userSchema } from "src/schemas/user.schema";
+import config from '../config';
 
 export const UsersProvider = [ {
-  provide: `USER_MODEL`,
+  provide: config.USER_MODEL,
   useFactory: (connection: Connection) => connection.model('User', userSchema),
-  inject: [ `DATABASE_CONNECTION` ]
+  inject: [ config.DATABASE_CONNECTION ]
 } ]
