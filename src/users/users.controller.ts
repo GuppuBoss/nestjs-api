@@ -14,9 +14,10 @@ export class UserController {
   ) { }
   @Post('forgetpassword')
   sendEmail (
-    @Body('email') email: string
+    @Body('email') email: string,
+    @Body('redirectURI') redirectURI: string
   ) {
-    return this.forgetPassword.sendConfirmationEmail(email);
+    return this.forgetPassword.sendConfirmationEmail(email, redirectURI);
   }
 
   @Get('forgetpassword/:token')
@@ -24,9 +25,12 @@ export class UserController {
     @Param('token') token: string,
     @Res() res: Response
   ) {
-    jwt.verify(token, config.FORGET_PASSWORD_JWT_TOKEN_SECRET, (err, decodedEmail) => {
+    jwt.verify(token, config.FORGET_PASSWORD_JWT_TOKEN_SECRET, (err, decodedToken) => {
       if (err) throw new UnauthorizedException();
-      else res.redirect(`${config.FORGET_PASSWORD_REDIRECT_URL}${token}`);
+      if(decodedToken.redirectURI){
+        res.redirect(`${decodedToken.redirectURI}${token}`);
+      }
+      else res.redirect(`http://localhost:3000/forgetpassword/${token}`);
     });
   }
   @Post('forgetpass/recovery/:token')
@@ -34,12 +38,12 @@ export class UserController {
     @Body() body,
     @Param('token') token: string
   ) {
-    !!token && jwt.verify(token, config.FORGET_PASSWORD_JWT_TOKEN_SECRET, async (err, decodedEmail) => {
+    !!token && jwt.verify(token, config.FORGET_PASSWORD_JWT_TOKEN_SECRET, async (err, decodedToken) => {
       if (err) {
         throw new UnauthorizedException();
       }
       else {
-        const user = await this.userService.findOneByEmail(decodedEmail.email);
+        const user = await this.userService.findOneByEmail(decodedToken.email);
         user.password = body.password;
         await user.save()
       }
