@@ -8,7 +8,8 @@ const config = {
   SENDING_EMAIL_PASS: '6a65fb7e274b87',
   SENDING_EMAIL: 'nestjs@gupuboss.com',
   FORGET_PASSWORD_JWT_TOKEN_SECRET: 'FORGET_PASSWORD_JWT_TOKEN_SECRET',
-  FORGET_PASSWORD_REDIRECT_URL: 'http://localhost:3001/forgetpassword/'
+  FORGET_PASSWORD_REDIRECT_URL_BACKEND: 'http://localhost:3001/forgetpassword/',
+  FORGET_PASSWORD_REDIRECT_URL_FRONTEND: 'http://localhost:3000/forgetpassword/'
 }
 
 export default config;

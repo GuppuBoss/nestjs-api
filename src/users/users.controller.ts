@@ -30,7 +30,7 @@ export class UserController {
       if(decodedToken.redirectURI){
         res.redirect(`${decodedToken.redirectURI}${token}`);
       }
-      else res.redirect(`http://localhost:3000/forgetpassword/${token}`);
+      else res.redirect(`${config.FORGET_PASSWORD_REDIRECT_URL_FRONTEND}${token}`);
     });
   }
   @Post('forgetpass/recovery/:token')

@@ -39,7 +39,7 @@ export class ForgetPasswordService {
         <br/>
         <p> This link will expires in <b> one minute </b> </p>
         <br/>
-        <a href = ${config.FORGET_PASSWORD_REDIRECT_URL + token} target = "_blank" > FORGET PASSWORD </a>
+        <a href = ${config.FORGET_PASSWORD_REDIRECT_URL_BACKEND + token} target = "_blank" > FORGET PASSWORD </a>
         <br/>
       `
       });
