@@ -48,6 +48,14 @@ export class UsersService {
     const user = await this.userModel.findOne({ username: username })
     if (!!user) return user;
   }
+  async findOneByUsernameAndPassword (username: string, password: string): Promise<userInterface> {
+    const user = await this.userModel.findOne({ username: username, password: password })
+    if (!!user) return user;
+  }
+  async findOneByEmailAndPassword (email: string, password: string): Promise<userInterface> {
+    const user = await this.userModel.findOne({ email: email, password: password })
+    if (!!user) return user;
+  }
   async findOneByEmail (email: string): Promise<userInterface> {
     const user = await this.userModel.findOne({ email: email })
     if (!!user) return user;

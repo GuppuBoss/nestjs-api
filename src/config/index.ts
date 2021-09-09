@@ -9,7 +9,10 @@ const config = {
   SENDING_EMAIL: 'nestjs@gupuboss.com',
   FORGET_PASSWORD_JWT_TOKEN_SECRET: 'FORGET_PASSWORD_JWT_TOKEN_SECRET',
   FORGET_PASSWORD_REDIRECT_URL_BACKEND: 'http://localhost:3001/forgetpassword/',
-  FORGET_PASSWORD_REDIRECT_URL_FRONTEND: 'http://localhost:3000/forgetpassword/'
+  FORGET_PASSWORD_REDIRECT_URL_FRONTEND: 'http://localhost:3000/forgetpassword/',
+  RESET_PASSWORD_REDIRECT_URL_BACKEND: 'http://localhost:3001/resetpassword/',
+  RESET_PASSWORD_JWT_TOKEN_SECRET: 'RESET_PASSWORD_JWT_TOKEN_SECRET',
+  RESET_PASSWORD_REDIRECT_URL_FRONTEND: 'http://localhost:3000/resetpassword/'
 }
 
 export default config;
