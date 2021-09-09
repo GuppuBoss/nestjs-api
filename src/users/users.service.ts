@@ -17,12 +17,9 @@ export class UsersService {
     const user = await this.userModel.findOne({ username: username })
     if (!!user) return user;
   }
-  async signUpUser (payload: UserRecieved) {
-    const { name, username, email, password } = payload;
-    const user = await this.userModel.create({ name, username, email, password });
-    return {
-      access_token: this.jwtService.sign({ name: user.name, sub: user._id.toString() })
-    }
+  async createUser(user: UserRecieved) {
+    const userCreated = await this.userModel.create(user);
+    return userCreated;
   }
   async findOrCreateFbUser (profile) {
     const user = await this.findOne(profile.name);

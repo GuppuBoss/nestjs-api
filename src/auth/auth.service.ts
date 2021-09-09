@@ -1,47 +1,61 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import User from 'src/users/dto/createUser.dto';
+import { Model } from 'mongoose';
+import User, { UserRecieved } from 'src/users/dto/createUser.dto';
+import config from 'src/config';
+import { userInterface } from 'src/schemas/user.interface';
 
 @Injectable()
 export class AuthService {
-    constructor(private userService: UsersService, private jwtService: JwtService) {}
+  constructor(
+    private userService: UsersService,
+    private jwtService: JwtService,
+    @Inject(config.USER_MODEL)
+    private userModel: Model<userInterface>
+  ) { }
 
-    async validateUser(username: string, password: string): Promise<any> {
-        const user = await this.userService.findOne(username);
+  async validateUser (username: string, password: string): Promise<any> {
+    const user = await this.userService.findOne(username);
 
-        if (user && user.password === password) {
-            const { password, ...rest } = user;
-            return rest;
-        }
-
-        return null;
+    if (user && user.password === password) {
+      const { password, ...rest } = user;
+      return rest;
     }
 
-    async login(user: User) {
-        const payload = { name: user.name, sub: user.id }
+    return null;
+  }
 
-        return {
-            access_token: this.jwtService.sign(payload)
-        }
+  async login (user: User) {
+    const payload = { name: user.name, sub: user.id }
 
+    return {
+      access_token: this.jwtService.sign(payload)
     }
-    googleLogin(req) {
-        if (!req.user) {
-          return 'No user from google'
-        }
-        return {
-          message: 'User Info from Google',
-          user: req.user
-        }
-      }
-    facebookLogin(req) {
-        if (!req.user) {
-        return 'No user from facebook'
-        }
-        return {
-        message: 'User Info from facebook',
-        user: req.user
-        }
+
+  }
+
+  async signUpUser (payload: UserRecieved) {
+    const user = await this.userService.createUser(payload);
+    this.login(user);
+  }
+  
+  googleLogin (req) {
+    if (!req.user) {
+      return 'No user from google'
     }
+    return {
+      message: 'User Info from Google',
+      user: req.user
+    }
+  }
+  facebookLogin (req) {
+    if (!req.user) {
+      return 'No user from facebook'
+    }
+    return {
+      message: 'User Info from facebook',
+      user: req.user
+    }
+  }
 }

@@ -9,10 +9,10 @@ import { UsersService } from 'src/users/users.service';
 
 @Controller()
 export class AuthController {
-  constructor(private readonly authService: AuthService, private userService: UsersService) { }
+  constructor(private readonly authService: AuthService) { }
   @Post('signup')
   signUp (@Body() body: UserRecieved) {
-    return this.userService.signUpUser(body)
+    return this.authService.signUpUser(body)
   }
 
   @UseGuards(LocalAuthGuard)
