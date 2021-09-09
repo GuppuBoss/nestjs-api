@@ -8,12 +8,14 @@ import { LocalStrategy } from '../strategies/local.strategy';
 import { FacebookStrategy } from '../strategies/facebook.strategy';
 import { AuthController } from './auth.controller';
 import { GoogleStrategy } from 'src/strategies/google.strategy';
+import { UsersProvider } from 'src/users/users.provider';
+import { DatabaseModule } from 'src/databases/database.module';
 @Module({
-  imports: [UsersModule, PassportModule, JwtModule.register({
+  imports: [ UsersModule, DatabaseModule, PassportModule, JwtModule.register({
     secret: `"${process.env.JWT_SECRET}"`,
     signOptions: { expiresIn: '60s' },
   })],
-  providers: [AuthService, LocalStrategy, JwtStrategy, FacebookStrategy, GoogleStrategy],
+  providers: [ AuthService, LocalStrategy, JwtStrategy, FacebookStrategy, GoogleStrategy, ...UsersProvider],
   exports: [AuthService],
   controllers: [AuthController]
 })
