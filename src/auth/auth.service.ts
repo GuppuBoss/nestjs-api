@@ -8,7 +8,7 @@ export class AuthService {
     constructor(private userService: UsersService, private jwtService: JwtService) {}
 
     async validateUser(username: string, password: string): Promise<any> {
-        const user = await this.userService.findOne(username);
+        const user = await this.userService.findOneUser(username);
 
         if (user && user.password === password) {
             const { password, ...rest } = user;
@@ -31,8 +31,7 @@ export class AuthService {
           return 'No user from google'
         }
         return {
-          message: 'User Info from Google',
-          user: req.user
+          data: req.user
         }
       }
     facebookLogin(req) {
@@ -40,8 +39,7 @@ export class AuthService {
         return 'No user from facebook'
         }
         return {
-        message: 'User Info from facebook',
-        user: req.user
+        data: req.user
         }
     }
 }

@@ -9,7 +9,7 @@ export class FacebookStrategy extends PassportStrategy(Strategy, "facebook") {
     super({
       clientID: process.env.FACEBOOK_APP_ID,
       clientSecret: process.env.FACEBOOK_APP_SECRET,
-      callbackURL: "http://localhost:3000/login/facebook/redirect",
+      callbackURL: "http://localhost:5000/login/facebook/redirect",
       scope: "email",
       profileFields: ["id", "emails", "name"],
     });
@@ -21,9 +21,9 @@ export class FacebookStrategy extends PassportStrategy(Strategy, "facebook") {
     profile: Profile,
     done: (err: any, user: any, info?: any) => void
   ): Promise<any> {
-    const user = await this.usersService.findOrCreateFbUser(profile);
+    const userInfo = await this.usersService.findOrCreateFbUser(profile);
     const payload = {
-      user,
+      userInfo,
       accessToken,
     };
 

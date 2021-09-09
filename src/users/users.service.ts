@@ -5,14 +5,14 @@ import User from './dto/createUser.dto';
 export class UsersService {
    private readonly Users: User[] = [
        {
-           id: 1,
+           id: "1",
            name: "Hunain",
            username: "codife",
            password: "1234",
            email: "test@yopmail.com"
        },
        {
-            id: 2,
+            id: "2",
             name: "Danial",
             username: "guppuboss",
             password: "1234",
@@ -20,12 +20,14 @@ export class UsersService {
        }
    ];
 
-   async findOne(username: string): Promise<User | undefined> {
-       return this.Users.find(user => user.username === username);
+   async findOne(id: string): Promise<User | undefined> {
+       return this.Users.find(user => user.id === id);
    }
-
+   async findOneUser(username: string): Promise<User | undefined> {
+    return this.Users.find(user => user.username === username);
+}
    async findOrCreateFbUser(profile): Promise<User> {
-    const user = await this.findOne(profile.name);
+    const user = await this.findOne(profile.id);
     if (user) {
       return user;
     }
@@ -37,5 +39,14 @@ export class UsersService {
     };
     this.Users.push(createdUser);
     return createdUser;
+  }
+
+  async createUser (user): Promise<boolean | undefined> {
+    this.Users.push(user);
+    if(this.findOne(user)) {
+      return true;
+    } else {
+      return false;
+    }
   }
  }
